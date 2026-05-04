@@ -1,9 +1,9 @@
 ## Live Demo
 
-- API: http://13.206.84.144/status
-- API Health: http://13.206.84.144/health
-- Prometheus: http://13.206.84.144:9090
-- Grafana: http://13.206.84.144:3001
+- API: http:
+- API Health: 
+- Prometheus: 
+- Grafana: 
 
 ## API Endpoints
 
