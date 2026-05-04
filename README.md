@@ -91,7 +91,7 @@ Docker Compose rolling update strategy:
 
 Load test result:
 ```bash
-ab -n 1000 -c 100 http://13.206.84.144/status
+ab -n 1000 -c 100............
 # Requests per second: ~100+
 # Failed requests: 0
 ```
