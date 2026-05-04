@@ -1,0 +1,20 @@
+# SSH Keys
+*.pem
+*.key
+
+# Terraform sensitive files
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform.lock.hcl
+
+# Environment files
+.env
+.env.*
+
+# Node modules
+node_modules/
+coverage/
+
+# Logs
+*.log
