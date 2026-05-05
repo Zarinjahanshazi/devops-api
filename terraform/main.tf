@@ -80,11 +80,11 @@ resource "aws_security_group" "app" {
   }
 
 ingress {
-  description = "SSH"
+  description = "SSH - restrict to specific IP in production"
   from_port   = 22
   to_port     = 22
   protocol    = "tcp"
-  cidr_blocks = ["103.138.26.157/32"]
+  cidr_blocks = ["0.0.0.0/0"]  # TODO: restrict to bastion/VPN IP
 }
 
 ingress {
@@ -92,7 +92,7 @@ ingress {
   from_port   = 8080
   to_port     = 8080
   protocol    = "tcp"
-  cidr_blocks = ["103.138.26.157/32"]
+  cidr_blocks = ["0.0.0.0/0"]
 }
 
 ingress {
@@ -100,7 +100,7 @@ ingress {
   from_port   = 3001
   to_port     = 3001
   protocol    = "tcp"
-  cidr_blocks = ["103.138.26.157/32"]
+  cidr_blocks = ["0.0.0.0/0"]
 }
 
 ingress {
@@ -108,7 +108,7 @@ ingress {
   from_port   = 9090
   to_port     = 9090
   protocol    = "tcp"
-  cidr_blocks = ["103.138.26.157/32"]
+  cidr_blocks = ["0.0.0.0/0"]
 }
 
   egress {
