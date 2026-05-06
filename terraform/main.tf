@@ -14,7 +14,7 @@ provider "aws" {
 
 variable "key_pair_name" {
   description = "Your EC2 key pair name"
-  default     = "devops-key"
+  default     = "devops-key-new"
 }
 
 data "aws_ami" "ubuntu" {
