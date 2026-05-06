@@ -1,16 +1,12 @@
 version: '3.8'
 
 services:
-
-  # Node.js App
   app:
-    build:
-      context: ./app
-      target: production
+    image: 679395100121.dkr.ecr.ap-south-1.amazonaws.com/devops-api:latest
     environment:
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV:-production}
       PORT: 3000
-      APP_VERSION: "1.0.0"
+      APP_VERSION: ${APP_VERSION:-1.0.0}
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
       interval: 30s
@@ -21,7 +17,6 @@ services:
       - backend
     restart: unless-stopped
 
-  # Nginx Reverse Proxy
   nginx:
     image: nginx:alpine
     ports:
@@ -35,7 +30,6 @@ services:
       - backend
     restart: unless-stopped
 
-  # Prometheus
   prometheus:
     image: prom/prometheus:latest
     ports:
@@ -46,7 +40,6 @@ services:
       - backend
     restart: unless-stopped
 
-  # Grafana
   grafana:
     image: grafana/grafana:latest
     ports:
