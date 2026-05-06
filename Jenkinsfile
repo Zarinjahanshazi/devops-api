@@ -96,19 +96,27 @@ pipeline {
                     ]
                 ]) {
                     sh """
+                        # Create directories on EC2
+                        ssh -i \$SSH_KEY \
+                          -o StrictHostKeyChecking=no \
+                          ${EC2_USER}@\${EC2_HOST} \
+                          "mkdir -p /home/ubuntu/app/nginx /home/ubuntu/app/monitoring"
+
+                        # Copy files to EC2
                         scp -i \$SSH_KEY \
                           -o StrictHostKeyChecking=no \
                           docker-compose.yml \
-                          ${EC2_USER}@\${EC2_HOST}:/home/${EC2_USER}/app/
+                          ${EC2_USER}@\${EC2_HOST}:/home/ubuntu/app/
 
                         scp -i \$SSH_KEY \
                           -o StrictHostKeyChecking=no -r \
                           nginx/ monitoring/ \
-                          ${EC2_USER}@\${EC2_HOST}:/home/${EC2_USER}/app/
+                          ${EC2_USER}@\${EC2_HOST}:/home/ubuntu/app/
 
+                        # Deploy on EC2
                         ssh -i \$SSH_KEY \
                           -o StrictHostKeyChecking=no \
-                          ${EC2_USER}@\${EC2_HOST} << 'REMOTE'
+                          ${EC2_USER}@\${EC2_HOST} bash << 'REMOTE'
                             set -e
                             cd /home/ubuntu/app
 
@@ -119,8 +127,8 @@ pipeline {
                             export APP_VERSION=${env.IMAGE_TAG}
                             export NODE_ENV=production
 
-                            docker compose pull app
-                            docker compose up -d --no-deps app
+                            docker compose pull
+                            docker compose up -d
                             sleep 15
                             curl -sf http://localhost/health || exit 1
                             echo "Deploy successful!"
